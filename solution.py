@@ -78,8 +78,8 @@ def get_route(hostname):
 
             #Fill in start
             # Make a raw socket named mySocket
-            icmp = getprotobyname("icmp")
-            mySocket = socket(AF_INET, SOCK_RAW, icmp)
+            ICMP = getprotobyname("icmp")
+            mySocket = socket(AF_INET, SOCK_RAW, ICMP)
             #Fill in end
 
             mySocket.setsockopt(IPPROTO_IP, IP_TTL, struct.pack('I', ttl))
@@ -112,8 +112,8 @@ def get_route(hostname):
             else:
                 #Fill in start
                 #Fetch the icmp type from the IP packet
-                icmpHeaderContent = recvPacket[20:28]
-                types, code, checksum, packetID, sequence = struct.unpack("bbHHh", icmpHeaderContent)
+                icmpHeaderData = recvPacket[20:28]
+                types, code, checksum, packetID, sequence = struct.unpack("bbHHh", icmpHeaderData)
                 #Fill in end
                 try: #try to fetch the hostname
                     #Fill in start
@@ -121,19 +121,17 @@ def get_route(hostname):
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
-                    tracelist1.append("hostname not returnable")
+                    tracelist1.append("Cannot return hostname")
                     #Fill in end
 
                 if types == 11:
                     bytes = struct.calcsize("d")
-                    timeSent = struct.unpack("d", recvPacket[28:28 +
-                    bytes])[0]
+                    timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
                     tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
-
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
@@ -143,7 +141,6 @@ def get_route(hostname):
                     tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
-
                     #Fill in end
                 elif types == 0:
                     bytes = struct.calcsize("d")
@@ -153,7 +150,6 @@ def get_route(hostname):
                     tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
-
                     return tracelist2
                     #Fill in end
 
