@@ -121,7 +121,7 @@ def get_route(hostname):
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
-                    tracelist1.append("Cannot return hostname")
+                    tracelist1.append("The host cannot return its hostname")
                     #Fill in end
 
                 if types == 11:
@@ -129,6 +129,7 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
+                    # Converted timeReceived from seconds to miliseconds, and converted it to a string
                     convertedTime = str(int((timeReceived - t) * 1000))
                     tracelist1.insert(-1, convertedTime + "ms")
                     tracelist1.insert(-1, addr[0])
@@ -139,7 +140,9 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
-                    tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
+                    # Converted timeReceived from seconds to miliseconds, and converted it to a string
+                    convertedTime = str(int((timeReceived - t) * 1000))
+                    tracelist1.insert(-1, convertedTime + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
                     #Fill in end
@@ -148,7 +151,9 @@ def get_route(hostname):
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here and return your list if your destination IP is met
-                    tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
+                    # Converted timeReceived from seconds to miliseconds, and converted it to a string
+                    convertedTime = str(int((timeReceived - t) * 1000))
+                    tracelist1.insert(-1, convertedTime + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
                     return tracelist2
